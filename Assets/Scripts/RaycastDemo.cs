@@ -362,12 +362,37 @@ public class RaycastDemo : MonoBehaviour
             ));
         }
     }
+    
+    private int buttonWidth = 200;
+    private int buttonHeight = 40;
+    private float xButtonMargin = 20;
+    private Vector2 scrollPosition = Vector2.zero;
 
     private void OnGUI()
     {
+        RectOffset padding = GUI.skin.button.padding;
+        RectOffset margin  = GUI.skin.button.margin;
+
+        // TODO: The height calculation should be done more correctly.
+        Rect viewRect = new Rect(
+            0,
+            0,
+            buttonWidth,
+            ((buttonHeight + (padding.vertical + margin.vertical)) * ScenarioTargets.Length) - buttonHeight
+        );
+
+        
+        scrollPosition = GUI.BeginScrollView(
+            position: new Rect(Screen.width - buttonWidth - xButtonMargin, 10, buttonWidth + xButtonMargin, Screen.height - 10),
+            scrollPosition: scrollPosition,
+            viewRect: viewRect,
+            alwaysShowHorizontal: false,
+            alwaysShowVertical: false
+        );
+
         for (int i = 0; i < ScenarioTargets.Length; i++)
         {
-            if (GUI.Button(new Rect(Screen.width - 210, 10 + 50 * i, 200, 40), $"Run Scenario {i + 1}"))
+            if (GUI.Button(new Rect(0, 50 * i, buttonWidth, buttonHeight), $"Run Scenario {i + 1}"))
             {
                 StopAllCoroutines();
                 bool updatedScenario = i != ScenarioIndex;
@@ -375,6 +400,7 @@ public class RaycastDemo : MonoBehaviour
                 StartCoroutine(RunScenario(updatedScenario));
             }
         }
+        GUI.EndScrollView();
     }
 
     #region Raycast
