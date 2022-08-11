@@ -392,7 +392,7 @@ public class RaycastDemo : MonoBehaviour
 
         for (int i = 0; i < ScenarioTargets.Length; i++)
         {
-            if (GUI.Button(new Rect(0, 0 + 50 * i, buttonWidth, buttonHeight), $"Run Scenario {i + 1}"))
+            if (GUI.Button(new Rect(0, 50 * i, buttonWidth, buttonHeight), $"Run Scenario {i + 1}"))
             {
                 StopAllCoroutines();
                 bool updatedScenario = i != ScenarioIndex;
@@ -401,20 +401,6 @@ public class RaycastDemo : MonoBehaviour
             }
         }
         GUI.EndScrollView();
-    
-        #region OLD CODE
-        // for (int i = 0; i < ScenarioTargets.Length; i++)
-        // {
-        //     if (GUI.Button(new Rect(Screen.width - 210, 10 + 50 * i, 200, 40), $"Run Scenario {i + 1}"))
-        //     {
-        //         StopAllCoroutines();
-        //         bool updatedScenario = i != ScenarioIndex;
-        //         ScenarioIndex = i;
-        //         StartCoroutine(RunScenario(updatedScenario));
-        //     }
-        // }
-        #endregion
-
     }
 
     #region Raycast
